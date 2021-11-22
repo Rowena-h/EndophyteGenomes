@@ -5,20 +5,29 @@
 #$ -l h_vmem=1G   	# Request 1GB RAM
 #$ -j y
 
-STRAIN=$(sed -n ${SGE_TASK_ID}p ../strains)
+STRAIN=$(cat ../strains_shortread ../strains_hybrid | awk '{print $1}' | sed -n ${SGE_TASK_ID}p)
 
 module load anaconda3
 conda activate quast
 
-quast.py 	../denovo_assembly/abyss/${STRAIN}/k56/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k64/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k72/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k80/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k88/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k96/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k104/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k112/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k120/${STRAIN}-contigs.fa \
-		../denovo_assembly/abyss/${STRAIN}/k128/${STRAIN}-contigs.fa \
-		-o ${STRAIN}/${STRAIN}_abyss_quast_results \
-		-t ${NSLOTS} --fungus
+if grep -Fq ${STRAIN} ../strains_shortread
+then
+
+	quast.py        ../denovo_assembly/abyss/${STRAIN}/${STRAIN}_abyss_polished_filtered.fa \
+	                ../denovo_assembly/megahit/${STRAIN}/${STRAIN}_megahit_polished_filtered.fa \
+        	        ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa \
+               		-l "ABySS v2.0.2, MEGAHIT v1.2.9, SPAdes v3.11.1" \
+	                -o ${STRAIN}/${STRAIN}_shortread_quast_results \
+	                -t ${NSLOTS} --fungus
+
+elif grep -Fq ${STRAIN} ../strains_hybrid
+then
+
+	quast.py	../denovo_assembly/flye/${STRAIN}/${STRAIN}_flye_polished_filtered.fa \
+			../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa \
+ 	               	../denovo_assembly/spades_hybrid/${STRAIN}/${STRAIN}_spades_hybrid_polished_filtered.fa \
+                	-l "Flye v2.6, Raven v1.6.1, SPAdes v3.11.1" \
+	                -o ${STRAIN}/${STRAIN}_hybrid_quast_results \
+        	        -t ${NSLOTS} --fungus
+
+fi
