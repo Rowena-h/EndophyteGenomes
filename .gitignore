@@ -1,0 +1,11 @@
+#ignore script log files
+*.sh.*
+#ignore plots
+*.tiff
+#ignore data files
+*.faa*
+*.fa
+*.fasta
+*.gbff
+*.bam*
+*.blobDB.*
