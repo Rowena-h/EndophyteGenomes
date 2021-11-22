@@ -2,11 +2,10 @@
 #$ -cwd           
 #$ -pe smp 4      
 #$ -l h_rt=02:00:00 
-#$ -l h_vmem=2G   
+#$ -l h_vmem=5G   
 #$ -j y
-#$ -t 1
 
-STRAIN=$(cat ../strains | sed -n ${SGE_TASK_ID}p)
+STRAIN=$(sed -n ${SGE_TASK_ID}p ../strains_shortread)
 
 module load trimmomatic
 
