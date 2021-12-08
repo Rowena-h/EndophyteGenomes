@@ -19,6 +19,7 @@ then
 
 	blastn 	-query ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa \
 		-db /data/scratch/btx494/nt \
+		-task megablast \
 		-outfmt '6 qseqid staxids bitscore std' \
 		-max_target_seqs 1 \
 		-max_hsps 1 \
@@ -31,6 +32,7 @@ then
 
 	blastn  -query ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa \
         	-db /data/scratch/btx494/nt \
+		-task megablast \
 	        -outfmt '6 qseqid staxids bitscore std' \
 	        -max_target_seqs 1 \
 	        -max_hsps 1 \
