@@ -2,8 +2,9 @@
 #$ -cwd
 #$ -j y
 #$ -pe smp 8
-#$ -l h_rt=240:00:00
+#$ -l h_rt=24:00:00
 #$ -l h_vmem=10G
+#$ -m bea
 
 STRAIN=$(awk '{print $1}' ../strains_hybrid | sed -n ${SGE_TASK_ID}p)
 
@@ -24,7 +25,7 @@ module load samtools
 #Index assembly
 bwa index raven/${STRAIN}/${STRAIN}-contigs.fa
 #Align reads to assembly and sort by readname
-bwa mem raven/${STRAIN}/${STRAIN}-contigs.fa ${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz ${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz -t ${NSLOTS} | samtools sort -@ ${NSLOTS} -n -o raven/${STRAIN}/${STRAIN}_raven_mapped_sorted.bam -
+bwa mem raven/${STRAIN}/${STRAIN}-contigs.fa ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz ../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz -t ${NSLOTS} | samtools sort -@ ${NSLOTS} -n -o raven/${STRAIN}/${STRAIN}_raven_mapped_sorted.bam -
 #Coordinate sort and mark duplicates
 samtools fixmate -m -@ ${NSLOTS} raven/${STRAIN}/${STRAIN}_raven_mapped_sorted.bam - | samtools sort -@ ${NSLOTS} - | samtools markdup -@ ${NSLOTS} - raven/${STRAIN}/${STRAIN}_raven_mapped_sorted_dups.bam
 #Calculate statistics
