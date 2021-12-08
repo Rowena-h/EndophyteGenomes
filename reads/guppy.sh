@@ -1,13 +1,13 @@
 #!/bin/sh
-#$ -cwd           # Set the working directory for the job to the current directory
-#$ -pe smp 12     # Request 12 cores
-#$ -l h_rt=72:0:0 # Request 72 hours runtime
-#$ -l h_vmem=1G   # Request 1GB RAM
+#$ -cwd           	# Set the working directory for the job to the current directory
+#$ -pe smp 12     	# Request 12 cores
+#$ -l h_rt=240:0:0 	# Request 240 hours runtime
+#$ -l h_vmem=1G   	# Request 1GB RAM
 #$ -j y
 
 STRAIN=$(awk '{print $1}' ../strains_hybrid | sed -n ${SGE_TASK_ID}p)
 
-module load singularity
+mkdir ${STRAIN}/minion
 
 singularity exec /data/containers/nanopore/nanopore-guppy-4.5.3.simg guppy_basecaller \
 	-i /data/scratch/btx494/${STRAIN}/fast5/ \
