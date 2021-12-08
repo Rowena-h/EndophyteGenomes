@@ -6,7 +6,7 @@
 #$ -j y
 #$ -t 56-128:8	#kmer sizes to check
 
-STRAINS=$(cat ../strains_shortread)
+STRAINS=$(awk '{print $1}' ../strains_shortread)
 
 module load abyss
 

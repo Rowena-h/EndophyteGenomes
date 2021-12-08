@@ -5,7 +5,7 @@
 #$ -j y
 #$ -m bea
 
-STRAIN=$(sed -n ${SGE_TASK_ID}p ../strains_shortread)
+STRAIN=$(awk '{print $1}' ../strains_shortread | sed -n ${SGE_TASK_ID}p)
 
 module load anaconda3
 conda activate megahit
