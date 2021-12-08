@@ -7,7 +7,7 @@
 #$ -j y
 #$ -m bea
 
-STRAIN=$(sed -n ${SGE_TASK_ID}p ../strains_shortread)
+STRAIN=$(awk '{print $1}' ../strains_shortread | sed -n ${SGE_TASK_ID}p)
 
 module load bwa
 module load samtools
@@ -21,20 +21,24 @@ do
 
 	#Index assembly	
 	bwa index ${ASSEMBLER}/${STRAIN}/${STRAIN}-contigs.fa
-	#Align reads to assembly and sort by readname
-	bwa mem ${ASSEMBLER}/${STRAIN}/${STRAIN}-contigs.fa ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz ../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz -t ${NSLOTS} | samtools sort -@ ${NSLOTS} -n -o ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_sorted.bam -
-	#Coordinate sort and mark duplicates
-	samtools fixmate -m -@ ${NSLOTS} ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_sorted.bam - | samtools sort -@ ${NSLOTS} - | samtools markdup -@ ${NSLOTS} - ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_sorted_dups.bam
+
+	#Align reads to assembly, coordinate sort and mark duplicates
+	bwa mem ${ASSEMBLER}/${STRAIN}/${STRAIN}-contigs.fa \
+	../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
+	../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz \
+	-t ${NSLOTS} | \
+	samtools fixmate -m -@ ${NSLOTS} - - | \
+	samtools sort -@ ${NSLOTS} - | \
+	samtools markdup -@ ${NSLOTS} - ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam
+
 	#Calculate statistics
-	samtools flagstat ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_sorted_dups.bam > ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapstats
+	samtools flagstat ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam > ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapstats
 	
-	#Coordinate sort for polishing
-	samtools sort -@ ${NSLOTS} ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_sorted.bam -o ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam
-	#Index
+	#Index for polishing
 	samtools index ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam
 
 	#Polish with pilon
-	pilon --genome ${ASSEMBLER}/${STRAIN}/${STRAIN}-contigs.fa --frags ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam --output ${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished --changes --fix all
+	pilon --genome ${ASSEMBLER}/${STRAIN}/${STRAIN}-contigs.fa --frags ${ASSEMBLER}/${STRAIN}/bwa/${STRAIN}_${ASSEMBLER}_mapped_coordinatesorted.bam --output ${ASSEMBLER}/${STRAIN}/test --changes --fix all
 
 	#Remove contigs <200bp (to be NCBI compliant)
 	seqtk seq -L 200 ${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished.fasta > ${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa
