@@ -1,5 +1,6 @@
 #ignore script log files
 *.sh.*
+denovo_assembly/raven.cereal
 #ignore plots
 *.tiff
 #ignore data files
@@ -9,3 +10,12 @@
 *.gbff
 *.bam*
 *.blobDB.*
+#ignore data directories
+denovo_assembly/abyss/
+denovo_assembly/spades/
+denovo_assembly/megahit/
+denovo_assembly/flye/
+denovo_assembly/raven/
+denovo_assembly/spades_hybrid/
+assessment/*/
+reads/*/
