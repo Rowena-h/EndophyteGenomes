@@ -16,11 +16,18 @@ if grep -Fq ${STRAIN} ../strains_shortread
 then
 
 	bwa index ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa
-	bwa mem ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz ../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz -t ${NSLOTS} | samtools sort -@ ${NSLOTS} -o ${STRAIN}/${STRAIN}_spades_srmapped_coordinatesorted.bam -
+	bwa mem ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa \
+		../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
+		../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz \
+		-t ${NSLOTS} | \
+		samtools sort -@ ${NSLOTS} -o ${STRAIN}/${STRAIN}_spades_srmapped_coordinatesorted.bam -
 
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
 
-	minimap2 -ax map-ont -t ${NSLOTS} -L ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa ../reads/${STRAIN}/${STRAIN}_minion_all_passed.fastq.gz  | samtools sort -@ ${NSLOTS} -o ${STRAIN}/${STRAIN}_raven_lrmapped_coordinatesorted.bam -
+	minimap2 	-ax map-ont -t ${NSLOTS} \
+			-L ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa \
+			../reads/${STRAIN}/${STRAIN}_minion_all_passed.fastq.gz  | \
+			samtools sort -@ ${NSLOTS} -o ${STRAIN}/${STRAIN}_raven_lrmapped_coordinatesorted.bam -
 
 fi
