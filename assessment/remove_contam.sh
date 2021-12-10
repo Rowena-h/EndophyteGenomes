@@ -1,6 +1,6 @@
 #!/bin/sh
 
-STRAINS=$(cat ../strains_hybrid | awk '{print $1}')
+STRAINS=$(head -n -1 ../strains_hybrid ../strains_hybrid | awk '{print $1}')
 
 module load seqtk
 
@@ -12,12 +12,14 @@ do
 	if grep -Fq ${STRAIN} ../strains_shortread
 	then
 
-		awk 'NR==FNR {A[$1]++;next} $6 in A {print $1}' orders_${CLASS} ${STRAIN}/blobtools/${STRAIN}_spades_blobtools_order.${STRAIN}_spades_blobtools.blobDB.table.txt | seqtk subseq ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa - > ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_${CLASS}.fa
+		awk 'NR==FNR {A[$1]++;next} $6 in A {print $1}' orders_${CLASS} ${STRAIN}/blobtools/${STRAIN}_spades_blobtools_order.${STRAIN}_spades_blobtools.blobDB.table.txt | \
+		seqtk subseq ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa - > ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam.fa
 
 	elif grep -Fq ${STRAIN} ../strains_hybrid
 	then
 
-		awk 'NR==FNR {A[$1]++;next} $6 in A {print $1}' orders_${CLASS} ${STRAIN}/blobtools/${STRAIN}_raven_blobtools_order.${STRAIN}_raven_blobtools.blobDB.table.txt | seqtk subseq ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa - > ${STRAIN}/blobtools/${STRAIN}_raven_polished_filtered_${CLASS}.fa
+		awk 'NR==FNR {A[$1]++;next} $6 in A {print $1}' orders_${CLASS} ${STRAIN}/blobtools/order.${STRAIN}_raven_blobtools.blobDB.table.txt | \
+		seqtk subseq ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa - > ${STRAIN}/blobtools/${STRAIN}_raven_polished_filtered_${CLASS}.fa
 
 	fi
 	
