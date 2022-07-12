@@ -40,22 +40,22 @@ then
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
 
-	TOOL=$(cat ../strains_shortread ../strains_hybrid | sed -n ${SGE_TASK_ID}p | awk '{print $4}')
+	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | sed -n ${SGE_TASK_ID}p | awk '{print $4}')
 	
-	samtools index ${STRAIN}/${STRAIN}_${TOOL}_lrmapped_coordinatesorted.bam
+	samtools index ${STRAIN}/${STRAIN}_${ASSEMBLER}_lrmapped_coordinatesorted.bam
 
-        ~/Programmes/blobtools/blobtools create         -i ../denovo_assembly/${TOOL}/${STRAIN}/${STRAIN}_${TOOL}_polished_filtered.fa \
-                                                        -b ${STRAIN}/${STRAIN}_${TOOL}_lrmapped_coordinatesorted.bam \
-                                                       	-t ${STRAIN}/${STRAIN}_${TOOL}_blast.tsv \
-                                                        -o ${STRAIN}/blobtools/${STRAIN}_${TOOL}_blobtools
+        ~/Programmes/blobtools/blobtools create         -i ../denovo_assembly/${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa \
+                                                        -b ${STRAIN}/${STRAIN}_${ASSEMBLER}_lrmapped_coordinatesorted.bam \
+                                                       	-t ${STRAIN}/${STRAIN}_${ASSEMBLER}_blast.tsv \
+                                                        -o ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_blobtools
 
 	for i in order
         do
                 ~/Programmes/blobtools/blobtools plot   -r $i \
-                                                        -i ${STRAIN}/blobtools/${STRAIN}_${TOOL}_blobtools.blobDB.json \
+                                                        -i ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_blobtools.blobDB.json \
                                                         -o ${STRAIN}/blobtools/
 		
-		~/Programmes/blobtools/blobtools view	-i ${STRAIN}/blobtools/${STRAIN}_${TOOL}_blobtools.blobDB.json \
+		~/Programmes/blobtools/blobtools view	-i ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_blobtools.blobDB.json \
                                                 	-o ${STRAIN}/blobtools/${i} \
 	                                                --rank $i
 
