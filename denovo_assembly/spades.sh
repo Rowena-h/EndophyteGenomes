@@ -18,3 +18,36 @@ spades.py 	-1 ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
 		-t ${NSLOTS}
 
 mv spades/${STRAIN}/contigs.fasta spades/${STRAIN}/${STRAIN}-contigs.fa
+
+module load bwa
+module load samtools
+
+#Polishing with short reads
+
+#Index assembly
+bwa index spades/${STRAIN}/${STRAIN}-contigs.fa
+
+#Align reads to assembly, coordinate sort and mark duplicates
+bwa mem spades/${STRAIN}/${STRAIN}-contigs.fa \
+	../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
+	../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz \
+	-t ${NSLOTS} | \
+	samtools fixmate -m -@ ${NSLOTS} - - | \
+	samtools sort -@ ${NSLOTS} - | \
+	samtools markdup -@ ${NSLOTS} - spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam
+
+#Calculate statistics
+samtools flagstat spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam > spades/${STRAIN}/${STRAIN}_spades_mapstats
+
+#Index for polishing
+samtools index spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam
+
+conda activate pilon
+
+#Polish with pilon
+pilon --genome spades/${STRAIN}/${STRAIN}-contigs.fa --frags spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam --output spades/${STRAIN}/test --changes --fix all
+
+module load seqtk
+
+#Remove contigs <200bp (to be NCBI compliant)
+seqtk seq -L 200 spades/${STRAIN}/${STRAIN}_spades_polished.fasta > spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa
