@@ -9,7 +9,7 @@ STRAIN=$(awk '{print $1}' ../strains_hybrid | sed -n ${SGE_TASK_ID}p)
 
 mkdir ${STRAIN}/minion
 
-singularity exec /data/containers/nanopore/nanopore-guppy-4.5.3.simg guppy_basecaller \
+singularity exec /data/containers/nanopore_guppy/4.5.3/ubuntu1804-nanopore_guppy-4.5.3.simg guppy_basecaller \
 	-i /data/scratch/btx494/${STRAIN}/fast5/ \
 	-s ${STRAIN}/minion/ \
 	-c dna_r9.4.1_450bps_fast.cfg \

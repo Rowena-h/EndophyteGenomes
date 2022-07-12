@@ -30,14 +30,16 @@ then
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
 
-	blastn  -query ../denovo_assembly/raven/${STRAIN}/${STRAIN}_raven_polished_filtered.fa \
+	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | awk '{print $4}' | sed -n ${SGE_TASK_ID}p)
+
+	blastn  -query ../denovo_assembly/${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa \
         	-db /data/scratch/btx494/nt \
 		-task megablast \
 	        -outfmt '6 qseqid staxids bitscore std' \
 	        -max_target_seqs 1 \
 	        -max_hsps 1 \
 	        -evalue 1e-25 \
-	        -out ${STRAIN}/${STRAIN}_raven_blast.tsv \
+	        -out ${STRAIN}/${STRAIN}_${ASSEMBLER}_blast.tsv \
 	        -num_threads ${NSLOTS}
 
 fi
