@@ -1,6 +1,6 @@
 tip,name,species.complex,own
 355084,C. fioriniae IMI 355084,acutatum,Y
-366226,C. tropicale,gloeosporioides,Y
+366226,C. tropicale IMI 366226,gloeosporioides,Y
 Colletotrichum_abscissum_strain_CDA916,C. abscissum,acutatum,
 Colletotrichum_abscissum_strain_CDA918,C. abscissum,acutatum,
 Colletotrichum_acerbum_culture-collection_CBS_128530,C. acerbum,acutatum,
@@ -279,8 +279,8 @@ Colletotrichum_torulosum_culture-collection_CBS_128544,C. torulosum,boninense,
 Colletotrichum_trifolii_strain_CBS_128554,C. trifolii,orbiculare,
 Colletotrichum_trifolii_strain_CBS_158.83,C. trifolii,orbiculare,
 Colletotrichum_trifolii_strain_CBS_425.83,C. trifolii,orbiculare,
-Colletotrichum_tropicale_isolate_CMM2999,C. tropicale,gloeosporioides,
-Colletotrichum_tropicale_strain_CMM4243,C. tropicale,gloeosporioides,
+Colletotrichum_tropicale_isolate_CMM2999,C. tropicale CMM 2999,gloeosporioides,
+Colletotrichum_tropicale_strain_CMM4243,C. tropicale CMM 4243,gloeosporioides,
 Colletotrichum_tropicicola_strain_CBS_127555,C. tropicicola,dracaenophilum,
 Colletotrichum_tropicicola_strain_CBS_133174,C. tropicicola,dracaenophilum,
 Colletotrichum_truncatum_culture-collection_CBS_112998,C. truncatum,truncatum,
