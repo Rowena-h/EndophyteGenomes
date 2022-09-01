@@ -57,7 +57,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 `cd GenePull`
 
-`./genepull.sh` submits [GenePull](https://github.com/Rowena-h/MiscGenomicsTools/tree/main/GenePull) to extract selected genetic markers from contaminant filtered assemblies of each strain.
+`./genepull.sh` submits [GenePull](https://github.com/Rowena-h/MiscGenomicsTools/tree/main/GenePull) to extract selected genetic markers from contaminant filtered assemblies of each strain. Requires fasta files containing a single example sequence from a closely related taxon for each genetic marker being extracted.
 
 ### Alignment
 
