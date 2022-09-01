@@ -34,17 +34,17 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 ### Assembly tool comparison
 
 1. `./submit_assessment` submits scripts for assembly quality statistics - `quast.sh` ([QUAST](https://github.com/ablab/quast)) and `busco.sh` ([BUSCO](https://busco.ezlab.org/)), which requires the ascomycota_odb10.2020-09-10 BUSCO dataset downloaded from [here](https://busco-data.ezlab.org/v4/data/lineages/)) - and `blast.sh` ([BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)), `diamond.sh` ([DIAMOND](https://github.com/bbuchfink/diamond)) and `read_mapping.sh`, which maps reads with BWA-MEM, to produce input for BlobTools.
-2. `qsub blobtools.sh` submits `blobtools.sh` to run [BlobTools](https://github.com/DRL/blobtools) (must be done after `blast.sh`, `diamond.sh` and `read_mapping.sh` have finished for the strain(s) in question).
+2. `qsub -t 1-15 blobtools.sh` submits `blobtools.sh` to run [BlobTools](https://github.com/DRL/blobtools) (must be done after `blast.sh`, `diamond.sh` and `read_mapping.sh` have finished for the strain(s) in question).
 
 ### Contamination filtering
 
-`qsub remove_contam.sh` removes contigs which BlobTools flagged as belonging to the wrong taxonomic class.
+`qsub -t 1-15 remove_contam.sh` removes contigs which BlobTools flagged as belonging to the wrong taxonomic class.
 
 ### Final quality statistics
 
 1. `qsub quast_final.sh` reruns QUAST on the contaminant-filtered assemblies.
 2. `qsub busco_final.sh` reruns BUSCO on the contaminant-filtered assemblies.
-3. `qsub read_mapping_final.sh` performs a final round of read mapping and produces mapping statisics with [SAMtools](http://www.htslib.org/) to calculate both short- and long-read coverage.
+3. `qsub -t 1-15 read_mapping_final.sh` performs a final round of read mapping and produces mapping statisics with [SAMtools](http://www.htslib.org/) to calculate both short- and long-read coverage.
 
 
 ## 4 Phylogenetics
