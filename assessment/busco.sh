@@ -30,7 +30,7 @@ then
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
 
-	for ASSEMBLER in flye
+	for ASSEMBLER in flye raven spades_hybrid
 	do
 		BUSCO.py 	-i ../denovo_assembly/${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa \
 				-c ${NSLOTS} \

@@ -3,7 +3,7 @@
 #$ -pe smp 10 		# Request 10 cores
 #$ -l h_rt=240:00:00 	# Request 240 hours runtime
 #$ -l h_vmem=1G   	# Request 1GB RAM
-#$ -m bea
+#$ -m ea
 #$ -j y
 
 STRAIN=$(cat ../strains_shortread ../strains_hybrid | awk '{print $1}' | sed -n ${SGE_TASK_ID}p)
@@ -11,14 +11,14 @@ STRAIN=$(cat ../strains_shortread ../strains_hybrid | awk '{print $1}' | sed -n 
 mkdir $STRAIN
 
 module load blast+/2.11.0
-module load anaconda3
-conda activate blast
+#module load anaconda3
+#conda activate blast
 
 if grep -Fq ${STRAIN} ../strains_shortread
 then
 
 	blastn 	-query ../denovo_assembly/spades/${STRAIN}/${STRAIN}_spades_polished_filtered.fa \
-		-db /data/scratch/btx494/nt \
+		-db /data/scratch/btx494/nt/nt \
 		-task megablast \
 		-outfmt '6 qseqid staxids bitscore std' \
 		-max_target_seqs 1 \
@@ -33,9 +33,9 @@ then
 	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | awk '{print $4}' | sed -n ${SGE_TASK_ID}p)
 
 	blastn  -query ../denovo_assembly/${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa \
-        	-db /data/scratch/btx494/nt \
+        	-db /data/scratch/btx494/nt/nt \
 		-task megablast \
-	        -outfmt '6 qseqid staxids bitscore std' \
+		-outfmt '6 qseqid staxids bitscore std' \
 	        -max_target_seqs 1 \
 	        -max_hsps 1 \
 	        -evalue 1e-25 \

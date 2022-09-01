@@ -5,26 +5,30 @@
 #$ -l h_vmem=1G   	# Request 1GB RAM
 #$ -j y
 
-SR_STRAINS=$(awk '{print $1}' ../strains_shortread)
+STRAINS=$(cat ../strains_shortread ../strains_hybrid | awk '{print $1}')
+ASSEMBLERS=$(cat ../strains_shortread ../strains_hybrid | awk '{print $4}')
 
-FIRST=$(echo $SR_STRAINS | awk '{print $1}')
-SR_LIST=$(echo $FIRST | sed 's#$#/blobtools/'${FIRST}'_spades_polished_filtered_nocontam.fa#')
+FIRST=$(echo $STRAINS | awk '{print $1}')
+FIRST_ASSEMBLER=$(echo $ASSEMBLERS | awk '{print $1}')
+LIST=$(echo $FIRST | sed 's#$#/blobtools/'${FIRST}'_'${FIRST_ASSEMBLER}'_polished_filtered_nocontam.fa#')
 
-SR_STRAINS2=$(echo $SR_STRAINS | awk '{ $1=""; print}')
+STRAINS2=$(echo $STRAINS | awk '{ $1=""; print}')
 
-for STRAIN in $SR_STRAINS2
+for STRAIN in $STRAINS2
 do
 
-	STRAIN=$(echo $STRAIN | sed 's#$#/blobtools/'${STRAIN}'_spades_polished_filtered_nocontam.fa#')
+	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | grep $STRAIN | awk '{print $4}')
 
-	SR_LIST=$(echo $SR_LIST $STRAIN)
+	STRAIN=$(echo $STRAIN | sed 's#$#/blobtools/'${STRAIN}'_'${ASSEMBLER}'_polished_filtered_nocontam.fa#')
+
+	LIST=$(echo $LIST $STRAIN)
 
 done
 
 module load anaconda3
 conda activate quast
 
-quast.py	${SR_LIST} \
-		-l $(echo ${SR_STRAINS} | sed 's/ /,/g') \
-                -o shortread_final_quast_results \
+quast.py	${LIST} \
+		-l $(echo ${STRAINS} | sed 's/ /,/g') \
+                -o final_quast_results \
                 -t ${NSLOTS} --fungus
