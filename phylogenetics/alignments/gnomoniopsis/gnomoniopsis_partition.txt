@@ -1,0 +1,2 @@
+GTR+G, p1_TEF1_alntrimmed=1-940
+GTR+G, p2_TUB2_alntrimmed=941-1369

@@ -1,0 +1,5 @@
+GTR+G, p1_ACL1_alntrimmed=1-592
+GTR+G, p2_CMDA_alntrimmed=593-1156
+GTR+G, p3_RPB1_alntrimmed=1157-1930
+GTR+G, p4_RPB2_alntrimmed=1931-3605
+GTR+G, p5_TEF1_alntrimmed=3606-4287

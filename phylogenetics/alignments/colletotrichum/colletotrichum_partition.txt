@@ -1,0 +1,3 @@
+GTR+G, p1_GAPDH_alntrimmed=1-354
+GTR+G, p2_HIS3_alntrimmed=355-775
+GTR+G, p3_TUB2_alntrimmed=776-2246

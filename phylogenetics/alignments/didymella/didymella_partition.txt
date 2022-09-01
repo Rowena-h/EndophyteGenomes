@@ -1,0 +1,2 @@
+GTR+G, p1_RPB2_alntrimmed=1-846
+GTR+G, p2_TUB2_alntrimmed=847-1177
