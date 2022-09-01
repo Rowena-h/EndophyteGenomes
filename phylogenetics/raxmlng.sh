@@ -1,6 +1,6 @@
 #!/bin/sh
 #$ -cwd                 # Set the working directory for the job to the current directory
-#$ -pe smp 20           # Request 20 cores
+#$ -pe smp 5           # Request 20 cores
 #$ -l h_rt=240:00:00    # Request max hours runtime
 #$ -l h_vmem=5G
 #$ -l highmem

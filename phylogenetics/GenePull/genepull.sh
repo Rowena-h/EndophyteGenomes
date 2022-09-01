@@ -3,6 +3,29 @@
 module bedtools
 module blast+
 
- ~/Scripts/GenePull -g HIS3_example.fasta -a ../../../assessment/366226/blobtools/366226_spades_polished_filtered_nocontam.fa -o 366226_HIS3
+for LINEAGE in $(awk '{print $1}' ../lineages}
+do
+	
+	STRAINS=$(grep ${LINEAGE} ../lineages | awk '{print $2}')
+	
+	for STRAIN in ${STRAINS//,/ }
+	do
 
-sed -i 's/>.*$/>355084/' 355084_GAPDH.fa
+		ASSEMBLY=$(ls ../../assessment/${STRAIN}/blobtools/${STRAIN}*polished_filtered_nocontam.fa)
+
+		for MARKER in $(cat ../markers)
+		do
+
+        		if [[ -f "${LINEAGE}/${MARKER}_example.fasta" ]]
+		        then
+
+				#Pull all hits for each marker from the assemblies
+				echo "a" | ~/Scripts/GenePull -g ${LINEAGE}/${MARKER}_example.fasta -a ${ASSEMBLY} -o ${LINEAGE}/${STRAIN}_${MARKER}
+		
+			fi
+
+		done
+
+	done
+
+done
