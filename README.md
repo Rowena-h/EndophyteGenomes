@@ -51,7 +51,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 `cd phylogenetics`
 
-This folder contains a file - `lineages` - listing the 10 lineages for which tree must be built and the strains that belong to said lineages, and a file - `markers` - listing the 13 genetic markers selected for building the trees.
+This folder contains a file - `lineages` - listing the 10 lineages for which trees must be built and the strains that belong to said lineages, and a file - `markers` - listing the 13 genetic markers selected for building the trees.
 
 ### Gene extraction
 
