@@ -33,7 +33,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 ### Assembly tool comparison
 
-1. `./assessment_submit` submits scripts for assembly quality statistics - `quast.sh` ([QUAST](https://github.com/ablab/quast)) and `busco.sh` ([BUSCO](https://busco.ezlab.org/)), which requires the ascomycota_odb10.2020-09-10 BUSCO dataset downloaded from [here](https://busco-data.ezlab.org/v4/data/lineages/)) - and `blast.sh` ([BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)) and `read_mapping.sh`, which maps reads with BWA-MEM, to produce input for BlobTools.
+1. `./submit_assessment` submits scripts for assembly quality statistics - `quast.sh` ([QUAST](https://github.com/ablab/quast)) and `busco.sh` ([BUSCO](https://busco.ezlab.org/)), which requires the ascomycota_odb10.2020-09-10 BUSCO dataset downloaded from [here](https://busco-data.ezlab.org/v4/data/lineages/)) - and `blast.sh` ([BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)) and `read_mapping.sh`, which maps reads with BWA-MEM for short-reads and [minimap2](https://github.com/lh3/minimap2) for long-reads, to produce input for BlobTools.
 2. `qsub blobtools.sh` submits `blobtools.sh` to run [BlobTools](https://github.com/DRL/blobtools) (must be done after `blast.sh` and `read_mapping.sh` have finished for the strain(s) in question).
 
 ### Contamination filtering
