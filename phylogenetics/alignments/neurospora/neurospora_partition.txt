@@ -1,0 +1,6 @@
+GTR+G, p1_BML_alntrimmed=1-975
+GTR+G, p2_LSU_alntrimmed=976-1800
+GTR+G, p3_MAK2_alntrimmed=1801-2561
+GTR+G, p4_NIK1_alntrimmed=2562-4326
+GTR+G, p5_PKC_alntrimmed=4327-4870
+GTR+G, p6_TEF1_alntrimmed=4871-5422
