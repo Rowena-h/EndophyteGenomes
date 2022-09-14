@@ -11,6 +11,17 @@ denovo_assembly/raven.cereal
 *.gbff
 *.bam*
 *.blobDB.*
+*.raxml.bestTree
+*.raxml.bestModel
+*.raxml.bootstraps
+*.raxml.log
+*.raxml.mlTrees
+*.raxml.rba
+*.raxml.startTree
+*.raxml.bestTreeCollapsed
+*.raxml.reduced.partition
+*.raxml.reduced.phy
+*.sbt
 #ignore data directories
 denovo_assembly/abyss/
 denovo_assembly/spades/
@@ -20,3 +31,6 @@ denovo_assembly/raven/
 denovo_assembly/spades_hybrid/
 assessment/*/
 reads/*/
+ncbi_upload/*/
+annotation/funannotate/*/
+annotation/repeat_masking/*/
