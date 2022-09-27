@@ -2,6 +2,7 @@
 #$ -cwd
 #$ -pe smp 10
 #$ -l h_rt=48:0:0
+#$ -l h_vmem=5G
 #$ -j y
 #$ -m bea
 
@@ -15,6 +16,8 @@ megahit -1 ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
 	-t ${NSLOTS} \
 	-o megahit/${STRAIN} \
 	--k-list 51,59,67,75,83,91,99,107,115,123,131
+
+conda deactivate megahit
 
 mv megahit/${STRAIN}/final.contigs.fa megahit/${STRAIN}/${STRAIN}-contigs.fa
 
@@ -44,7 +47,7 @@ samtools index megahit/${STRAIN}/${STRAIN}_megahit_mapped_coordinatesorted.bam
 conda activate pilon
 
 #Polish with pilon
-pilon --genome megahit/${STRAIN}/${STRAIN}-contigs.fa --frags megahit/${STRAIN}/${STRAIN}_megahit_mapped_coordinatesorted.bam --output megahit/${STRAIN}/test --changes --fix all
+pilon --genome megahit/${STRAIN}/${STRAIN}-contigs.fa --frags megahit/${STRAIN}/${STRAIN}_megahit_mapped_coordinatesorted.bam --output megahit/${STRAIN}/${STRAIN}_megahit_polished  --changes --fix all
 
 module load seqtk
 

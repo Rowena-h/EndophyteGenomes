@@ -1,8 +1,8 @@
 #!/bin/sh
 #$ -cwd                # Set the working directory for the job to the current directory
-#$ -pe smp 4           # Request 4 cores
+#$ -pe smp 10          # Request 4 cores
 #$ -l h_rt=12:00:00    # Request 48 hours runtime
-#$ -l h_vmem=1G        # Request 5GB RAM
+#$ -l h_vmem=5G        # Request 5GB RAM
 #$ -j y
 #$ -m bea
 
@@ -41,10 +41,11 @@ samtools flagstat abyss/${STRAIN}/${STRAIN}_abyss_mapped_coordinatesorted.bam > 
 #Index for polishing
 samtools index abyss/${STRAIN}/${STRAIN}_abyss_mapped_coordinatesorted.bam
 
+module load anaconda3
 conda activate pilon
 
 #Polish with pilon
-pilon --genome abyss/${STRAIN}/${STRAIN}-contigs.fa --frags abyss/${STRAIN}/${STRAIN}_abyss_mapped_coordinatesorted.bam --output abyss/${STRAIN}/test --changes --fix all
+pilon --genome abyss/${STRAIN}/${STRAIN}-contigs.fa --frags abyss/${STRAIN}/${STRAIN}_abyss_mapped_coordinatesorted.bam --output abyss/${STRAIN}/${STRAIN}_abyss_polished --changes --fix all
 
 module load seqtk
 

@@ -42,10 +42,11 @@ samtools flagstat spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam 
 #Index for polishing
 samtools index spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam
 
+module load anaconda3
 conda activate pilon
 
 #Polish with pilon
-pilon --genome spades/${STRAIN}/${STRAIN}-contigs.fa --frags spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam --output spades/${STRAIN}/test --changes --fix all
+pilon --genome spades/${STRAIN}/${STRAIN}-contigs.fa --frags spades/${STRAIN}/${STRAIN}_spades_mapped_coordinatesorted.bam --output spades/${STRAIN}/${STRAIN}_spades_polished --changes --fix all
 
 module load seqtk
 
