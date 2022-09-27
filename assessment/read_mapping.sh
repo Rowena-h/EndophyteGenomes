@@ -28,14 +28,14 @@ then
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
 
-	TOOL=$(cat ../strains_shortread ../strains_hybrid | sed -n ${SGE_TASK_ID}p | awk '{print $4}')
+	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | sed -n ${SGE_TASK_ID}p | awk '{print $4}')
 
 	minimap2	-ax map-ont \
 			-t ${NSLOTS} \
-			-L ../denovo_assembly/${TOOL}/${STRAIN}/${STRAIN}_${TOOL}_polished_filtered.fa \
+			-L ../denovo_assembly/${ASSEMBLER}/${STRAIN}/${STRAIN}_${ASSEMBLER}_polished_filtered.fa \
 			../reads/${STRAIN}/${STRAIN}_minion_all_passed.fastq.gz  | \
 			samtools fixmate -m -@ ${NSLOTS} - - | \
 			samtools sort -@ ${NSLOTS} - | \
-			samtools markdup -@ ${NSLOTS} - ${STRAIN}/${STRAIN}_${TOOL}_lrmapped_coordinatesorted.bam
+			samtools markdup -@ ${NSLOTS} - ${STRAIN}/${STRAIN}_${ASSEMBLER}_lrmapped_coordinatesorted.bam
 
 fi

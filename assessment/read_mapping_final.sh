@@ -16,18 +16,18 @@ module load minimap2
 if grep -Fq ${STRAIN} ../strains_shortread
 then
 	#Index assembly
-	bwa index ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam.fa
+	bwa index ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam_ncbi.fa
 	#Align reads to assembly, coordinate sort, mark duplicates and produce read mapping stats
-	bwa mem ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam.fa \
+	bwa mem ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam_ncbi.fa \
 		../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
 		../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz \
 		-t ${NSLOTS} | \
 		samtools fixmate -m -@ ${NSLOTS} - - | \
 		samtools sort -@ ${NSLOTS} - | \
 		samtools markdup -@ ${NSLOTS} - - | \
-		samtools stats - > ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam_mapstats
+		samtools stats - > ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam_ncbi_mapstats
 
-	rm ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam.fa.*
+	rm ${STRAIN}/blobtools/${STRAIN}_spades_polished_filtered_nocontam_ncbi.fa.*
 
 elif grep -Fq ${STRAIN} ../strains_hybrid
 then
@@ -35,24 +35,24 @@ then
 	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | sed -n ${SGE_TASK_ID}p | awk '{print $4}')
 
 	#Index assembly
-        bwa index ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa
+        bwa index ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa
         #Align reads to assembly, coordinate sort, mark duplicates and produce read mapping stats
-        bwa mem ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa \
+        bwa mem ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa \
                 ../reads/${STRAIN}/${STRAIN}_1_trimmedpaired.fastq.gz \
                 ../reads/${STRAIN}/${STRAIN}_2_trimmedpaired.fastq.gz \
                 -t ${NSLOTS} | \
                 samtools fixmate -m -@ ${NSLOTS} - - | \
                 samtools sort -@ ${NSLOTS} - | \
                 samtools markdup -@ ${NSLOTS} - - | \
-                samtools stats - > ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_srmapstats
+                samtools stats - > ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi_srmapstats
 
 	minimap2	-ax map-ont \
 			-t ${NSLOTS} \
-        	        -L ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa \
+        	        -L ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa \
                		../reads/${STRAIN}/${STRAIN}_minion_all_passed.fastq.gz  | \
 	                samtools fixmate -m -@ ${NSLOTS} - - | \
 			samtools sort -@ ${NSLOTS} - | \
 			samtools markdup -@ ${NSLOTS} - - | \
-			samtools stats - > ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_lrmapstats
+			samtools stats - > ${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi_lrmapstats
 
 fi

@@ -36,7 +36,7 @@ then
 				-c ${NSLOTS} \
 				-o ${STRAIN}_${ASSEMBLER}_busco \
 				-m genome \
-				-l /data/SBCS-BuggsLab/RowenaHill/genome_assemblies/busco_datasets/ascomycota_odb10.2020-09-10
+				-l ../../busco_datasets/ascomycota_odb10.2020-09-10
 
 		mv run_${STRAIN}_${ASSEMBLER}* ${STRAIN}
 

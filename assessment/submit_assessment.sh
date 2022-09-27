@@ -2,7 +2,7 @@
 #Script to submit assembly quality assessment jobs
 
 STRAINS=$(cat ../strains_shortread ../strains_hybrid)
-NUM=$(cat ../strains | wc -l)
+NUM=$(cat ../strains_shortread ..strains_hybrid | wc -l)
 
 for STRAIN in $STRAINS
 do

@@ -10,7 +10,7 @@ ASSEMBLERS=$(cat ../strains_shortread ../strains_hybrid | awk '{print $4}')
 
 FIRST=$(echo $STRAINS | awk '{print $1}')
 FIRST_ASSEMBLER=$(echo $ASSEMBLERS | awk '{print $1}')
-LIST=$(echo $FIRST | sed 's#$#/blobtools/'${FIRST}'_'${FIRST_ASSEMBLER}'_polished_filtered_nocontam.fa#')
+LIST=$(echo $FIRST | sed 's#$#/blobtools/'${FIRST}'_'${FIRST_ASSEMBLER}'_polished_filtered_nocontam_ncbi.fa#')
 
 STRAINS2=$(echo $STRAINS | awk '{ $1=""; print}')
 
@@ -19,7 +19,7 @@ do
 
 	ASSEMBLER=$(cat ../strains_shortread ../strains_hybrid | grep $STRAIN | awk '{print $4}')
 
-	STRAIN=$(echo $STRAIN | sed 's#$#/blobtools/'${STRAIN}'_'${ASSEMBLER}'_polished_filtered_nocontam.fa#')
+	STRAIN=$(echo $STRAIN | sed 's#$#/blobtools/'${STRAIN}'_'${ASSEMBLER}'_polished_filtered_nocontam_ncbi.fa#')
 
 	LIST=$(echo $LIST $STRAIN)
 
