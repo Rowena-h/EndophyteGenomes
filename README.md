@@ -12,7 +12,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 ### Short-reads
 
-1. `qsub trimmomatic.sh` trims raw reads using [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); requires `TruSeq3-PE.fa` file with adapter sequences downloaded from [here](https://github.com/timflutre/trimmomatic/blob/master/adapters/TruSeq3-PE.fa) (for Illumina NovaSeq 6000 151bp paired-end reads).
+1. `qsub trimmomatic.sh` trims raw reads using [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); requires `NexteraPE-PE.fa` file with adapter sequences downloaded from [here](https://github.com/timflutre/trimmomatic/blob/master/adapters/NexteraPE-PE.fa) (for Illumina NovaSeq 6000 151bp paired-end reads).
 2. `qsub fastqc.sh` checks trimmed read quality with [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 
 ### Long-reads
@@ -24,7 +24,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 `cd denovo_assembly`
 
 1. `./submit_assembly.sh` makes new directory and submits job scripts for each assembly tool - short-read tools `abyss.sh` ([ABySS](https://github.com/bcgsc/abyss)), `megahit.sh` ([MEGAHIT](https://github.com/voutcn/megahit)) and `spades.sh` ([SPAdes](https://github.com/ablab/spades)), and long-read tools `flye.sh` ([Flye](https://github.com/fenderglass/Flye)), `raven.sh` ([Raven](https://github.com/lbcb-sci/raven)) and `spades_hybrid` (hybridSPAdes). For all tools except for ABySS, these scripts also include short-read mapping with [BWA-MEM](https://github.com/lh3/bwa) for polishing with [Pilon](https://github.com/broadinstitute/pilon) and remove sequences <200bp using [Seqtk](https://github.com/lh3/seqtk) for NCBI compliance.
-2. `qsub abyss_comp.sh` compares the assembly stats to choose 'best' kmer size for ABySS (must be done after `abyss.sh` has finished for all kmer sizes and strains), followed by short-read polishing with Pilon.
+2. `qsub -t 1-8 abyss_comp.sh` compares the assembly stats to choose 'best' kmer size for ABySS (must be done after `abyss.sh` has finished for all kmer sizes and strains), followed by short-read polishing with Pilon.
 
 
 ## 3 Assessment
@@ -38,7 +38,8 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 ### Contamination filtering
 
-`qsub -t 1-15 remove_contam.sh` removes contigs which BlobTools flagged as belonging to the wrong taxonomic class.
+1. `qsub -t 1-15 remove_contam.sh` removes contigs which BlobTools flagged as belonging to the wrong taxonomic class.
+2. `qsub -t 1-15 ncbi_filter.sh` removes or trims contigs flagged as mitochondrial or adapter contaminations during NCBI submission with the help of[bedtools](https://bedtools.readthedocs.io/en/latest/); requires *strain*_ncbi_remove.txt and *strain*_ncbi_trim.bed files.
 
 ### Final quality statistics
 
@@ -47,7 +48,25 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 3. `qsub -t 1-15 read_mapping_final.sh` performs a final round of read mapping and produces mapping statisics with [SAMtools](http://www.htslib.org/) to calculate both short- and long-read coverage.
 
 
-## 4 Phylogenetics
+## 4 Annotation
+
+`cd annotation`
+
+### Repeat masking
+
+`cd annotation/repeat_masking`
+
+1. `qsub -t 1-15 repeatmodeler` makes custom repeat library for each strain using [RepeatModeler](https://www.repeatmasker.org/RepeatModeler/).
+2. `qsub -t 1-15 repeatmasker.sh` uses the custom repeat libraries to softmask assemblies using [RepeatMasker](https://www.repeatmasker.org/RepeatMasker/).
+
+### Structural annotation
+
+`cd annotation/funannotate`
+
+`qsub -t 1-15 funannotate` sorts and relabels contigs in the repeatmasked assembly before predicting gene models using [funannotate](https://github.com/nextgenusfs/funannotate). Requires protein and EST evidence downloaded from [Mycocosm](https://mycocosm.jgi.doe.gov/mycocosm/home) to be saved in this folder.
+
+
+## 5 Phylogenetics
 
 `cd phylogenetics`
 
@@ -69,3 +88,10 @@ This folder contains a file - `lineages` - listing the 10 lineages for which tre
 ### ML tree building
 
 `qsub -t 1-10 raxmlng.sh` submits [RAxML-NG](https://github.com/amkozlov/raxml-ng) with bootstrapping until convergence or up to 1,000 replicates (whichever first) for each of the 10 lineages.
+
+
+## Upload final assemblies to NCBI
+
+`cd ncbi_upload`
+
+`qsub -t 1-15 table2asn.sh` converts gff3 and fasta files from funannotate into the sqn file format for NCBI submission.
