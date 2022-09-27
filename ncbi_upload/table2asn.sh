@@ -3,7 +3,6 @@
 #$ -pe smp 1
 #$ -l h_rt=01:00:00
 #$ -j y
-#$ -t 1
 
 STRAIN=$(cat ../strains_shortread ../strains_hybrid | awk '{print $1}' | sed -n ${SGE_TASK_ID}p)
 NAME=$(grep ${STRAIN} ../annotation/funannotate/strain_info | awk -F'\t' '{print $2}')
