@@ -16,6 +16,6 @@ cd ${STRAIN}
 module load use.dev
 module load repeatmodeler
 
-BuildDatabase -name ${STRAIN} ../../../assessment/${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa
+BuildDatabase -name ${STRAIN} ../../../assessment/${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa
 
 RepeatModeler -database ${STRAIN} -engine ncbi -pa 1 -LTRStruct >& ${STRAIN}_repeats.out

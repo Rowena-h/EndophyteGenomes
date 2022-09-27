@@ -9,24 +9,21 @@
 STRAIN=$(cat ../../strains_shortread ../../strains_hybrid | awk '{print $1}' | sed -n ${SGE_TASK_ID}p)
 ASSEMBLER=$(cat ../../strains_shortread ../../strains_hybrid | awk '{print $4}' | sed -n ${SGE_TASK_ID}p)
 
-NAME=$(grep ${STRAIN} ../strain_info | awk -F'\t' '{print $2}')
-LOCUS_TAG=$(grep ${STRAIN} ../strain_info | awk -F'\t' '{print $3}')
-TRANSCRIPTS=$(grep ${STRAIN} ../strain_info | awk -F'\t' '{print $4}')
-PROTEINS=$(grep ${STRAIN} ../strain_info | awk -F'\t' '{print $5}')
+NAME=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $2}')
+LOCUS_TAG=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $3}')
+TRANSCRIPTS=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $4}')
+PROTEINS=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $5}')
 
-module load anaconda3
-conda activate repeatmasker
-
-~/funannotate_latest.sif funannotate sort	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa.masked \
-						-o ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa.masked.sorted
+~/funannotate_latest.sif funannotate sort	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked \
+						-o ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted
 
 
-~/funannotate_latest.sif funannotate predict	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa.masked.sorted \
+~/funannotate_latest.sif funannotate predict	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted \
 						--species "${NAME}" \
 						--strain IMI${STRAIN} \
 						--name ${LOCUS_TAG} \
-						--transcript_evidence ../${TRANSCRIPTS} \
-						--protein_evidence ../${PROTEINS} \
+						--transcript_evidence ${TRANSCRIPTS} \
+						--protein_evidence ${PROTEINS} \
 						-o ${STRAIN} \
 						--cpus ${NSLOTS} \
 						--force

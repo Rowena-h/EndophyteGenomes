@@ -16,4 +16,4 @@ mkdir ${STRAIN}_masked
 
 RepeatMasker 	-e ncbi -lib ${STRAIN}/RM*/consensi.fa \
 		-pa ${NSLOTS} -xsmall \
-		-dir ${STRAIN}_masked ../../assessment/${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam.fa
+		-dir ${STRAIN}_masked ../../assessment/${STRAIN}/blobtools/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa
