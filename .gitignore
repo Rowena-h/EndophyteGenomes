@@ -1,5 +1,6 @@
 #ignore script log files
 *.sh.*
+*.log
 denovo_assembly/raven.cereal
 #ignore plots
 *.tiff
