@@ -39,7 +39,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 ### Contamination filtering
 
 1. `qsub -t 1-15 remove_contam.sh` removes contigs which BlobTools flagged as belonging to the wrong taxonomic class.
-2. `qsub -t 1-15 ncbi_filter.sh` removes or trims contigs flagged as mitochondrial or adapter contaminations during NCBI submission with the help of[bedtools](https://bedtools.readthedocs.io/en/latest/); requires *strain*_ncbi_remove.txt and *strain*_ncbi_trim.bed files.
+2. `qsub -t 1-15 ncbi_filter.sh` removes or trims contigs flagged as mitochondrial or adapter contaminations during NCBI submission with the help of [bedtools](https://bedtools.readthedocs.io/en/latest/); requires *strain*_ncbi_remove.txt and *strain*_ncbi_trim.bed files.
 
 ### Final quality statistics
 
