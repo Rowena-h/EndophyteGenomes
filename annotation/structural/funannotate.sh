@@ -14,16 +14,18 @@ LOCUS_TAG=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $3}')
 TRANSCRIPTS=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $4}')
 PROTEINS=$(grep ${STRAIN} strain_info | awk -F'\t' '{print $5}')
 
-~/funannotate_latest.sif funannotate sort	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked \
-						-o ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted
+#~/funannotate_latest.sif
+#funannotate sort	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked \
+#			-o ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted
 
 
-~/funannotate_latest.sif funannotate predict	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted \
-						--species "${NAME}" \
-						--strain IMI${STRAIN} \
-						--name ${LOCUS_TAG} \
-						--transcript_evidence ${TRANSCRIPTS} \
-						--protein_evidence ${PROTEINS} \
-						-o ${STRAIN} \
-						--cpus ${NSLOTS} \
-						--force
+#~/funannotate_latest.sif
+/data/scratch/btx494/funannotate_v1.8.13.sif funannotate predict	-i ../repeat_masking/${STRAIN}_masked/${STRAIN}_${ASSEMBLER}_polished_filtered_nocontam_ncbi.fa.masked.sorted \
+			--species "${NAME}" \
+			--strain IMI${STRAIN} \
+			--name ${LOCUS_TAG} \
+			--transcript_evidence ${TRANSCRIPTS} \
+			--protein_evidence ${PROTEINS} \
+			--no-evm-partitions \
+			-o ${STRAIN} \
+			--cpus ${NSLOTS}
