@@ -61,10 +61,18 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 
 ### Structural annotation
 
-`cd annotation/funannotate`
+`cd annotation/structural`
 
-`qsub -t 1-15 funannotate` sorts and relabels contigs in the repeatmasked assembly before predicting gene models using [funannotate](https://github.com/nextgenusfs/funannotate). Requires protein and EST evidence downloaded from [Mycocosm](https://mycocosm.jgi.doe.gov/mycocosm/home) to be saved in this folder.
+`qsub -t 1-15 funannotate.sh` sorts and relabels contigs in the repeatmasked assembly before predicting gene models using [funannotate](https://github.com/nextgenusfs/funannotate). Requires protein and EST evidence downloaded from [Mycocosm](https://mycocosm.jgi.doe.gov/mycocosm/home) to be saved in this folder.
 
+### Functional annotation
+
+`cd annotation/functional`
+
+1. `qsub -t 1-15 eggnogmapper.sh` submits [eggNOG-mapper](https://github.com/eggnogdb/eggnog-mapper) on predicted gene models.
+2. `qsub -t 1-15 antismash.sh` submits [antiSMASH](https://github.com/antismash/antismash) on predicted gene models.
+3. `qsub -t 1-15 interproscan.sh` submits [InterProScan](https://github.com/ebi-pf-team/interproscan) on predicted gene models.
+4. `qsub -t 1-15 funannotate_annotate.sh` maps results from the previous three programmes onto the structural annotation and produces the `.sqn` files for NCBI submission.
 
 ## 5 Phylogenetics
 
@@ -88,10 +96,3 @@ This folder contains a file - `lineages` - listing the 10 lineages for which tre
 ### ML tree building
 
 `qsub -t 1-10 raxmlng.sh` submits [RAxML-NG](https://github.com/amkozlov/raxml-ng) with bootstrapping until convergence or up to 1,000 replicates (whichever first) for each of the 10 lineages.
-
-
-## Upload final assemblies to NCBI
-
-`cd ncbi_upload`
-
-`qsub -t 1-15 table2asn.sh` converts gff3 and fasta files from funannotate into the sqn file format for NCBI submission.
