@@ -96,3 +96,7 @@ This folder contains a file - `lineages` - listing the 10 lineages for which tre
 ### ML tree building
 
 `qsub -t 1-10 raxmlng.sh` submits [RAxML-NG](https://github.com/amkozlov/raxml-ng) with bootstrapping until convergence or up to 1,000 replicates (whichever first) for each of the 10 lineages.
+
+## 6 Data visualisation
+
+`plots.r`
