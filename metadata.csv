@@ -1,16 +1,16 @@
 strain,taxon,lineage,method,coverage.sr,coverage.lr,contigs,assembly,flow.cytometry,busco.completeness,acl1,Bml,cmdA,GAPDH,HIS3,LSU,mak.2,nik.1,PKC,RPB1,RPB2,TEF1,TUB2
-359910,Ascochyta clinopodiicola,Ascochyta,short-read,141,,1261,34.27,43.14,97.48,,,,,,,,,,,Y,,Y
-367209,cf. Kalmusia sp.,Didymosphaeriaceae,hybrid,208,27,30,,,,,,,,,Y,,,,,Y,Y,Y
-366227,Collariella sp.,Collariella,hybrid,316,39,49,,,,,,,,,,,,,,Y,,Y
-355084,Colletotrichum fioriniae,Colletotrichum,hybrid,195,21,57,,,,,,,Y,Y,,,,,,,,Y
-366226,Colletotrichum tropicale,Colletotrichum,short-read,87,,1758,,,,,,,Y,Y,,,,,,,,Y
-360193,Didymella glomerata,Didymella,short-read,255,,762,,,,,,,,,,,,,,Y,,Y
-355091,Didymella pomorum,Didymella,short-read,253,,549,,,,,,,,,,,,,,Y,,Y
-355093,Didymella sp.,Didymella,hybrid,300,138,27,31.53,32.03,98.83,,,,,,,,,,,Y,,Y
-356815,Didymosphaeria variabile,Didymosphaeriaceae,hybrid,212,216,11,,,,,,,,,Y,,,,,Y,Y,Y
-355082,Gnomoniopsis smithogilvyi,Gnomoniopsis,hybrid,113,44,10,,,,,,,,,,,,,,,Y,Y
-355080,Gnomoniopsis sp.,Gnomoniopsis,short-read,113,,725,,,,,,,,,,,,,,,Y,Y
-366586,Neocosmospora piperis,Neocosmospora,short-read,116,,1336,,,,Y,,Y,,,,,,,Y,Y,Y,
-356814,Neocucurbitaria cava,Neocucurbitaria,hybrid,160,165,24,34.85,45.21,98.36,,,,,,,,,,,Y,Y,Y
-364377,Neodidymelliopsis sp.,Neodidymelliopsis,short-read,188,,1135,30.41,39.56,97.89,,,,,,,,,,,Y,,Y
-360204,Neurospora sp.,Neurospora,short-read,105,,4655,44.93,49.18,95.6,,Y,,,,Y,Y,Y,Y,,,Y,
+355080,Gnomoniopsis sp.,Gnomoniopsis,short-read,112,,694,38.08234,,93.14,,,,,,,,,,,,Y,Y
+355082,Gnomoniopsis smithogilvyi,Gnomoniopsis,hybrid,113,44,9,35.292834,,86.64,,,,,,,,,,,,Y,Y
+355084,Colletotrichum fioriniae,Colletotrichum,hybrid,193,20,45,49.445812,,98.07,,,,Y,Y,,,,,,,,Y
+355091,Didymella pomorum,Didymella,short-read,252,,524,34.416163,,98.94,,,,,,,,,,,Y,,Y
+355093,Didymella sp.,Didymella,hybrid,300,138,27,31.52874,32.03,98.65,,,,,,,,,,,Y,,Y
+356814,Neocucurbitaria cava,Neocucurbitaria,hybrid,160,165,24,34.846001,45.21,98.30,,,,,,,,,,,Y,Y,Y
+356815,Didymosphaeria variabile,Didymosphaeriaceae,hybrid,212,216,11,39.450705,,98.12,,,,,,Y,,,,,Y,Y,Y
+359910,Ascochyta clinopodiicola,Ascochyta,short-read,139,,"1,199",33.61444,43.14,97.48,,,,,,,,,,,Y,,Y
+360193,Didymella glomerata,Didymella,short-read,253,,724,34.727068,,98.42,,,,,,,,,,,Y,,Y
+360204,Neurospora sp.,Neurospora,short-read,122,,"3,250",36.929578,49.18,95.25,,Y,,,,Y,Y,Y,Y,,,Y,
+364377,Neodidymelliopsis sp.,Neodidymelliopsis,short-read,186,,"1,103",30.047231,39.56,98.01,,,,,,,,,,,Y,,Y
+366226,Colletotrichum tropicale,Colletotrichum,short-read,86,,"1,685",54.633813,,96.42,,,,Y,Y,,,,,,,,Y
+366227,Collariella sp.,Collariella,hybrid,316,39,49,29.308369,,87.92,,,,,,,,,,,Y,,Y
+366586,Neocosmospora piperis,Neocosmospora,short-read,116,,"1,248",41.415286,,96.31,Y,,Y,,,,,,,Y,Y,Y,
+367209,cf. Kalmusia sp.,Didymosphaeriaceae,hybrid,208,27,30,42.784582,,98.18,,,,,,Y,,,,,Y,Y,Y
