@@ -4,7 +4,6 @@
 denovo_assembly/raven.cereal
 #ignore plots
 *.tiff
-*.png
 #ignore data files
 *.faa*
 *.fa
