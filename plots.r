@@ -97,8 +97,8 @@ gg.size <- ggplot(size.comp.df, aes(x=paste("IMI", strain), y=value, fill=type))
         panel.grid.major.x=element_blank())
 
 #Write to file
-#tiff(file=paste0("completeness_fig-", Sys.Date(), ".tiff"), height=5, width=6, units="in", res=300)
-ggarrange(gg.size, gg.completeness, ncol=1, labels="AUTO", align="v")
+#tiff(file=paste0("completeness_fig-", Sys.Date(), ".tiff"), height=6, width=6, units="in", res=300)
+ggarrange(gg.size, gg.completeness, ncol=1, labels=c("C", "D"), align="v")
 #dev.off()
 
 
@@ -112,9 +112,6 @@ markers.df <- metadata %>%
   mutate(gene=factor(gene)) %>%
   mutate(lineage=factor(lineage, levels=rev(levels(factor(lineage)))))
 
-#Make vector to format lineage labels
-label.face <- ifelse(is.na(str_extract(levels(markers.df$lineage), "aceae")), "italic", "plain")
-
 #Grid plot of markers used for each lineage
 gg.markers <- ggplot(markers.df, aes(x=gene, y=lineage, fill=copynum)) +
  geom_tile(colour="grey97", size=1) +
@@ -127,7 +124,7 @@ gg.markers <- ggplot(markers.df, aes(x=gene, y=lineage, fill=copynum)) +
         legend.title=element_text(face="bold", hjust=1),
         axis.title=element_blank(),
         axis.text.x=element_text(size=6, colour="black"),
-        axis.text.y=element_text(face=label.face, size=7, colour="black"))
+        axis.text.y=element_text(face="italic", size=7, colour="black"))
 
 #Write to file
 #tiff(file=paste0("markers_fig-", Sys.Date(), ".tiff"), height=2, width=6, units="in", res=300)
@@ -179,20 +176,8 @@ for (i in 1:length(tbas.df$node)) {
                 font=tip.face,
                 show.legend=FALSE) +
     ggtitle(label=tbas.df$lineage[i]) +
-    scale_colour_manual(values=c("black", "red"))
-  
-  #Add lineage titles
-  if (length(grep("aceae", tbas.df$lineage[i])) > 0) {
-    
-    gg.tbas <- gg.tbas +
-      theme(plot.title=element_text(size=8, hjust=0.5, face="bold"))
-    
-  } else {
-    
-    gg.tbas <- gg.tbas +
-      theme(plot.title=element_text(size=8, hjust=0.5, face="bold.italic"))
-    
-  }
+    scale_colour_manual(values=c("black", "red")) +
+    theme(plot.title=element_text(size=8, hjust=0.5, face="bold.italic"))
   
   assign(paste0("gg.tbas.", i), gg.tbas)
   
