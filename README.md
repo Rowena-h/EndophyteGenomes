@@ -44,7 +44,7 @@ The pipeline was written for and run on Queen Mary University of London's [Apocr
 ### Final quality statistics
 
 1. `qsub quast_final.sh` reruns QUAST on the contaminant-filtered assemblies.
-2. `qsub busco_final.sh` reruns BUSCO on the contaminant-filtered assemblies.
+2. `mkdir busco_final | qsub -t 1-15 busco_final.sh` makes a new directory and reruns BUSCO on the contaminant-filtered assemblies.
 3. `qsub -t 1-15 read_mapping_final.sh` performs a final round of read mapping and produces mapping statisics with [SAMtools](http://www.htslib.org/) to calculate both short- and long-read coverage.
 
 
