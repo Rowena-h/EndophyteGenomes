@@ -118,7 +118,8 @@ gg.markers <- ggplot(markers.df, aes(x=gene, y=lineage, fill=copynum)) +
   scale_fill_manual(values=c("white", "dimgrey")) +
   scale_y_discrete(labels=str_to_sentence(levels(markers.df$lineage))) +
   scale_x_discrete(position="top",
-                   labels=sub("\\.", "-", levels(markers.df$gene))) +
+                   labels=c("acl1", "Bml", "cmdA", "GAPDH", "HIS3", "LSU", "mak-2",
+                            "nik-1", "PKC", "RPB1", "RPB2", expression(paste("EF1", alpha)), "TUB2")) +
   theme_minimal() +
   theme(legend.position="none",
         legend.title=element_text(face="bold", hjust=1),
