@@ -2,6 +2,8 @@
  
 ![Pipeline workflow](pipeline.png)
 
+Bioinformatics analysis pipeline for [Hill et al. (2023) Tapping culture collections for fungal endophytes: first genome assemblies for three genera and five species in the *Ascomycota*. Genome Biology and Evolution evad038](https://doi.org/10.1093/gbe/evad038).
+
 The pipeline was written for and run on Queen Mary University of London's [Apocrita HPC facility](http://doi.org/10.5281/zenodo.438045) which uses the Univa Grid Engine batch-queue system. This means that many of the bash scripts (`.sh` file endings) specify core allocation, run times and memory usage allocation that may need to be adapted for different platforms.
 
 ---
