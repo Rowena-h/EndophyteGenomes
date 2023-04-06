@@ -1,4 +1,4 @@
-# Endophyte Genomes
+# Tapping culture collections for fungal endophytes: first genome assemblies for three genera and five species in the *Ascomycota*
  
 ![Pipeline workflow](pipeline.png)
 
